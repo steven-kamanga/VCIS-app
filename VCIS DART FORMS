@@ -1,0 +1,21 @@
+1 Register
+2 Login
+
+form
+3 create card
+
+form
+4 card_options
+    - Fullfillment 
+    - activation actions
+    - Funding - Select Funding Source - will beb provided by admin
+    - Associations
+    - Merchant Scope
+    - Velocity Control
+
+get_all server data and store in local database
+    - Firstly get stuff required for dropdowns
+
+
+Todays tasks - Login & registration
+             - get data from server and store in local database
