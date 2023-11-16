@@ -10,22 +10,22 @@ FundingModel fundingModelFromJson(String str) =>
 String fundingModelToJson(FundingModel data) => json.encode(data.toJson());
 
 class FundingModel {
-  int id;
-  String token;
-  String amount;
-  String currencyCode;
-  int user;
-  int card;
-  int fundingSourceToken;
+  int? id;
+  String? token;
+  String? amount;
+  String? currencyCode;
+  int? user;
+  int? card;
+  int? fundingSourceToken;
 
   FundingModel({
-    required this.id,
-    required this.token,
-    required this.amount,
-    required this.currencyCode,
-    required this.user,
-    required this.card,
-    required this.fundingSourceToken,
+    this.id,
+    this.token,
+    this.amount,
+    this.currencyCode,
+    this.user,
+    this.card,
+    this.fundingSourceToken,
   });
 
   factory FundingModel.fromJson(Map<String, dynamic> json) => FundingModel(

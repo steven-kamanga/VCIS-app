@@ -11,17 +11,18 @@ class Analytics extends StatelessWidget {
     Color secondary = HexColor("#eafefd");
     Color primary = HexColor("#b4eef0");
     List<_SalesData> data = [
-      _SalesData('Jan', 35),
-      _SalesData('Feb', 28),
+      _SalesData('Jan', 20),
+      _SalesData('Feb', 34),
       _SalesData('Mar', 34),
       _SalesData('Apr', 32),
       _SalesData('May', 40),
       _SalesData('May', 23),
-      _SalesData('May', 2011)
+      _SalesData('May', 33)
     ];
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
       ),

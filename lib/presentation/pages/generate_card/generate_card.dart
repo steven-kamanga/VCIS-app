@@ -1,9 +1,16 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:app/presentation/components/sticky_sliver.dart';
 import 'package:dropdownfield2/dropdownfield2.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
+import 'package:http/http.dart' as http;
 
 class GenerateCard extends StatefulWidget {
   const GenerateCard({super.key});
@@ -13,9 +20,26 @@ class GenerateCard extends StatefulWidget {
 }
 
 class _GenerateCardState extends State<GenerateCard> {
+  String token = '';
+  Future<String> getCredentials() async {
+    String token = '';
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    token = pref.getString("token")!;
+    return token;
+  }
+
+  void setToken() async {
+    token = await getCredentials();
+    print(token);
+  }
+
+  bool isLoading = false;
   List<String> instrumentTypeList = [
-    "Credit Card",
-    "Debit Card",
+    "MWK",
+  ];
+
+  List<String> CreditType = [
+    "Debit",
   ];
 
   TextEditingController cardNumber = TextEditingController();
@@ -45,6 +69,7 @@ class _GenerateCardState extends State<GenerateCard> {
 
   @override
   void initState() {
+    setToken();
     String cardNumberString = generateVisaCardNumber();
     cardNumber.text = formatCardNumber(cardNumberString);
     String cardNumberNoSpaces = cardNumber.text.replaceAll(' ', '');
@@ -63,10 +88,12 @@ class _GenerateCardState extends State<GenerateCard> {
     return lsf;
   }
 
+  Color secondary = HexColor("#eafefd");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: secondary,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -75,8 +102,8 @@ class _GenerateCardState extends State<GenerateCard> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: secondary,
           ),
           child: CustomScrollView(
             slivers: [
@@ -89,10 +116,12 @@ class _GenerateCardState extends State<GenerateCard> {
               ])),
               StickySliver(
                 child: Container(
-                  color: Colors.white,
+                  color: secondary,
                   child: const Text(
                     "Card",
-                    style: TextStyle(fontSize: 60, color: Colors.black),
+                    style: TextStyle(
+                        fontSize: 60,
+                        color: Color.fromARGB(255, 122, 122, 122)),
                   ),
                 ),
               ),
@@ -250,18 +279,78 @@ class _GenerateCardState extends State<GenerateCard> {
                                       strict: true,
                                       required: true,
                                       controller: instrumentType,
-                                      labelText: 'Title',
+                                      labelText: 'Instrument Type',
                                       labelStyle: const TextStyle(
                                           fontWeight: FontWeight.normal),
                                       enabled: true,
                                       items: instrumentTypeList,
-                                      itemsVisibleInDropdown: 2,
+                                      itemsVisibleInDropdown: 4,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Stack(
+                                  children: [
+                                    const Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 10,
+                                          ),
+                                          child: Text(
+                                            "*",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.red),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    DropDownField(
+                                      strict: true,
+                                      required: true,
+                                      controller: null,
+                                      labelText: 'Card Type',
+                                      labelStyle: const TextStyle(
+                                          fontWeight: FontWeight.normal),
+                                      enabled: true,
+                                      items: CreditType,
+                                      itemsVisibleInDropdown: 4,
                                     ),
                                   ],
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Center(
+                            child: InkWell(
+                              onTap: () {
+                                post();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(20)),
+                                height: 50,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Center(
+                                  child: Text(
+                                    "Submit",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 23),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -332,6 +421,58 @@ class _GenerateCardState extends State<GenerateCard> {
     var rng = Random();
     int cvv = rng.nextInt(1000);
     return cvv.toString().padLeft(3, '0');
+  }
+
+  Future post() async {
+    String baseUrl = "http://172.20.10.4:8000/api/v1/card/card-object";
+    // print(baseUrl);
+    var response = await http.post(Uri.parse(baseUrl),
+        body: ({
+          "card_product_token": cardNumber.text,
+          "last_four": lastFour.text,
+          "expiration": expiration.text,
+          "cvv_number": chipCvvNumber.text,
+          "state": city.text,
+          "instrument_type": instrumentType.text,
+        }),
+        headers: {
+          HttpHeaders.acceptHeader: "application/json",
+          HttpHeaders.authorizationHeader: "$token"
+        });
+    final body = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode >= 200 && response.statusCode <= 299) {
+      var message = body["message"];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("$message"),
+        ),
+      );
+      setState(() {
+        isLoading = false;
+      });
+      await Future.delayed(const Duration(seconds: 1));
+    } else if (response.statusCode >= 400 && response.statusCode <= 499) {
+      var message = body["message"];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("$message"),
+        ),
+      );
+      setState(() {
+        isLoading = false;
+      });
+    } else if (response.statusCode >= 500 && response.statusCode <= 599) {
+      var message = body["message"];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("$message"),
+        ),
+      );
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 }
 

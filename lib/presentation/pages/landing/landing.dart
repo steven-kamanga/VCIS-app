@@ -1,105 +1,146 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:app/presentation/components/card_list.dart';
 import 'package:app/presentation/components/sticky_sliver.dart';
+import 'package:app/presentation/pages/settings/card_settings/add_balance/add_balance.dart';
+import 'package:app/presentation/pages/landing/card_details.dart';
+import 'package:app/providers/total_amount_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class Landing extends StatelessWidget {
-  const Landing({super.key});
+import '../../../providers/card_provide.dart';
+
+class Landing extends ConsumerWidget {
+  const Landing({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cardsAsyncValue = ref.watch(cardProvider);
     Color primary = HexColor("#fbeace");
-    Color secondary = HexColor("#fffae7");
+    // Color secondary = HexColor("#fffae7");
+
     return Scaffold(
-        // bottomNavigationBar: ,
-        appBar: AppBar(
-          scrolledUnderElevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 13.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-            ),
+      // bottomNavigationBar: ,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 13.0),
+          child: CircleAvatar(
+            backgroundColor: Colors.white,
           ),
-          title: Text(
-            "Steven Kamanga",
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          actions: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 2,
-                  color: const Color.fromARGB(255, 60, 60, 60),
-                ),
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(4),
-                child: Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 13,
-            )
-          ],
         ),
-        backgroundColor: primary,
-        body: Padding(
-          padding: const EdgeInsets.only(left: 13, right: 13),
-          child: CustomScrollView(
-            slivers: [
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Container(
-                      color: Colors.transparent,
-                      child: HeaderText(),
-                    ),
-                  ],
-                ),
+        title: Text(
+          "Steven Kamanga",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 13),
+            child: InkWell(
+              onTap: () {},
+              child: Icon(
+                Icons.notifications,
+                color: Colors.black,
               ),
-              StickySliver(
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: primary,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: cardsAsyncValue.when(
+          data: (cards) {
+            return Scaffold(
+              backgroundColor: primary,
+              body: RefreshIndicator(
+                onRefresh: () async {
+                  // ignore: unused_result
+                  ref.refresh(cardProvider);
+                  // ignore: unused_result
+                  ref.refresh(totalAmountProvider);
+                },
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: Container(
-                    color: primary,
-                    child: TotalValue(),
+                  padding: const EdgeInsets.only(left: 13, right: 13),
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            Container(
+                              color: Colors.transparent,
+                              child: HeaderText(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      StickySliver(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: Container(
+                            color: primary,
+                            child: TotalValue(),
+                          ),
+                        ),
+                      ),
+                      ...cards.map(
+                        (e) => SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 8.0,
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CardDetailsScreen(
+                                      id: e.id!,
+                                      cardNumber: e.cardProductToken!,
+                                      cvv_number: e.cvvNumber!,
+                                      lastFour: e.lastFour!,
+                                      expiration: e.expiration!,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: CardList(
+                                cardNumber: e.cardProductToken!,
+                                expiration: e.expiration!,
+                                cvv_number: e.cvvNumber!,
+                                lastFour: e.lastFour!,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            SizedBox(
+                              height: 100,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              ...List<int>.generate(3, (index) => index)
-                  .map((e) => SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 8.0,
-                          ),
-                          child: CardList(
-                            textColor: Colors.black,
-                            color: secondary,
-                            cardNumber: 2,
-                          ),
-                        ),
-                      )),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    SizedBox(
-                      height: 110,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ));
+            );
+          },
+          loading: () => CircularProgressIndicator(),
+          error: (err, stack) => Text('Error: $err'),
+        ),
+      ),
+    );
   }
 }
 
@@ -141,13 +182,14 @@ class HeaderText extends StatelessWidget {
   }
 }
 
-class TotalValue extends StatelessWidget {
+class TotalValue extends ConsumerWidget {
   const TotalValue({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final totalAmountAsyncValue = ref.watch(totalAmountProvider);
     return SizedBox(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,106 +199,74 @@ class TotalValue extends StatelessWidget {
             style:
                 TextStyle(fontSize: 17, color: Color.fromARGB(255, 74, 74, 74)),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RichText(
-                text: const TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'MWk',
-                      style: TextStyle(
-                          fontSize: 30, color: Color.fromARGB(255, 74, 74, 74)),
-                    ),
-                    TextSpan(
-                      text: '26,561',
-                      style: TextStyle(fontSize: 60, color: Colors.black),
-                    ),
-                    TextSpan(
-                      text: '.50',
-                      style: TextStyle(
-                          fontSize: 30, color: Color.fromARGB(255, 74, 74, 74)),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 2,
-                      color: const Color.fromARGB(255, 60, 60, 60),
-                    ),
-                    borderRadius: BorderRadius.circular(50),
+          totalAmountAsyncValue.when(
+            data: (totalAmount) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 5.0),
+                child: SizedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'MWk',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: Color.fromARGB(255, 74, 74, 74)),
+                            ),
+                            TextSpan(
+                              text: totalAmount,
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.black),
+                            ),
+                            TextSpan(
+                              text: '.00',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: Color.fromARGB(255, 74, 74, 74)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: const Color.fromARGB(255, 60, 60, 60),
+                            ),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddBalance()),
+                                );
+                              },
+                              child: Icon(
+                                Icons.add,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Icon(
-                      Icons.add,
-                    ),
-                  ),
                 ),
-              ),
-            ],
-          )
+              );
+            },
+            loading: () => CircularProgressIndicator(),
+            error: (err, stack) => Text('Error: $err'),
+          ),
         ],
       ),
-    );
-  }
-}
-
-class Appbar extends StatelessWidget {
-  const Appbar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          child: Row(
-            children: [
-              const CircleAvatar(
-                backgroundColor: Colors.white,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                "Steven Kamanga",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            ],
-          ),
-        ),
-        SizedBox(
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: const Color.fromARGB(255, 60, 60, 60),
-                ),
-                borderRadius: BorderRadius.circular(50)),
-            child: const Padding(
-              padding: EdgeInsets.all(4),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.notifications,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
-      ],
     );
   }
 }

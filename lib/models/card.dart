@@ -1,66 +1,62 @@
-// To parse this JSON data, do
-//
-//     final cardModel = cardModelFromJson(jsonString);
-
-import 'dart:convert';
-
-CardModel cardModelFromJson(String str) => CardModel.fromJson(json.decode(str));
-
-String cardModelToJson(CardModel data) => json.encode(data.toJson());
-
 class CardModel {
-  int id;
-  DateTime createdTime;
-  DateTime lastModifiedTime;
-  String token;
-  String cardProductToken;
-  String lastFour;
-  String pan;
-  String expiration;
-  DateTime expirationTime;
-  String cvvNumber;
-  String chipCvvNumber;
-  bool pinIsSet;
-  String state;
-  bool fulfillmentStatus;
-  bool reissuePanFromCardToken;
-  String newPanFromCardToken;
-  String instrumentType;
-  int fulfillment;
-  int activationActions;
+  int? id;
+  DateTime? createdTime;
+  DateTime? lastModifiedTime;
+  String? token;
+  String? cardProductToken;
+  String? lastFour;
+  String? pan;
+  String? expiration;
+  DateTime? expirationTime;
+  String? cvvNumber;
+  String? chipCvvNumber;
+  bool? pinIsSet;
+  String? state;
+  bool? fulfillmentStatus;
+  bool? reissuePanFromCardToken;
+  String? newPanFromCardToken;
+  String? instrumentType;
+  int? fulfillment;
+  int? activationActions;
 
   CardModel({
-    required this.id,
-    required this.createdTime,
-    required this.lastModifiedTime,
-    required this.token,
-    required this.cardProductToken,
-    required this.lastFour,
-    required this.pan,
-    required this.expiration,
-    required this.expirationTime,
-    required this.cvvNumber,
-    required this.chipCvvNumber,
-    required this.pinIsSet,
-    required this.state,
-    required this.fulfillmentStatus,
-    required this.reissuePanFromCardToken,
-    required this.newPanFromCardToken,
-    required this.instrumentType,
-    required this.fulfillment,
-    required this.activationActions,
+    this.id,
+    this.createdTime,
+    this.lastModifiedTime,
+    this.token,
+    this.cardProductToken,
+    this.lastFour,
+    this.pan,
+    this.expiration,
+    this.expirationTime,
+    this.cvvNumber,
+    this.chipCvvNumber,
+    this.pinIsSet,
+    this.state,
+    this.fulfillmentStatus,
+    this.reissuePanFromCardToken,
+    this.newPanFromCardToken,
+    this.instrumentType,
+    this.fulfillment,
+    this.activationActions,
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
         id: json["id"],
-        createdTime: DateTime.parse(json["created_time"]),
-        lastModifiedTime: DateTime.parse(json["last_modified_time"]),
+        createdTime: json["created_time"] != null
+            ? DateTime.parse(json["created_time"])
+            : null,
+        lastModifiedTime: json["last_modified_time"] != null
+            ? DateTime.parse(json["last_modified_time"])
+            : null,
         token: json["token"],
         cardProductToken: json["card_product_token"],
         lastFour: json["last_four"],
         pan: json["pan"],
         expiration: json["expiration"],
-        expirationTime: DateTime.parse(json["expiration_time"]),
+        expirationTime: json["expiration_time"] != null
+            ? DateTime.parse(json["expiration_time"])
+            : null,
         cvvNumber: json["cvv_number"],
         chipCvvNumber: json["chip_cvv_number"],
         pinIsSet: json["pin_is_set"],
@@ -75,14 +71,14 @@ class CardModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "created_time": createdTime.toIso8601String(),
-        "last_modified_time": lastModifiedTime.toIso8601String(),
+        "created_time": createdTime?.toIso8601String(),
+        "last_modified_time": lastModifiedTime?.toIso8601String(),
         "token": token,
         "card_product_token": cardProductToken,
         "last_four": lastFour,
         "pan": pan,
         "expiration": expiration,
-        "expiration_time": expirationTime.toIso8601String(),
+        "expiration_time": expirationTime?.toIso8601String(),
         "cvv_number": cvvNumber,
         "chip_cvv_number": chipCvvNumber,
         "pin_is_set": pinIsSet,

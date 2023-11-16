@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class CardList extends StatefulWidget {
-  CardList({
+class CardBack extends StatefulWidget {
+  CardBack({
     super.key,
     required this.cardNumber,
     required this.cvv_number,
@@ -18,10 +18,10 @@ class CardList extends StatefulWidget {
   String cvv_number;
 
   @override
-  State<CardList> createState() => _CardListState();
+  State<CardBack> createState() => _CardBackState();
 }
 
-class _CardListState extends State<CardList> {
+class _CardBackState extends State<CardBack> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -63,44 +63,26 @@ class CreditCard extends StatelessWidget {
           ),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              child: Padding(
-                padding: EdgeInsets.all(12),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.card_giftcard,
-                        size: 40,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "**** **** **** $lastFour",
-                        style: TextStyle(fontSize: 30, color: Colors.white),
-                      ),
-                    ]),
-              ),
-            ),
             Padding(
               padding: EdgeInsets.all(12),
               child: SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Expires $expiration",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 166, 166, 166)),
-                    ),
-                    Text(
-                      "Steven Kamanga",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    )
-                  ],
+                child: SizedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 15,
+                        width: 340,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        cvv_number,
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
