@@ -1,3 +1,4 @@
+import 'package:app/presentation/pages/wallet/transaction_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -15,7 +16,7 @@ class Wallet extends StatelessWidget {
     Color cardSecondary = HexColor("#b5b8da");
     Color buttonPrimary = HexColor("c9d0e8");
     Color buttonSecondary = HexColor("a898fa");
-    Color cardPrimary = HexColor("e2e9f1");
+    // Color cardPrimary = HexColor("e2e9f1");
 
     return Scaffold(
       appBar: AppBar(
@@ -93,13 +94,27 @@ class Wallet extends StatelessWidget {
                 const SizedBox(
                   height: 18,
                 ),
-                RichText(
-                  text: const TextSpan(
-                    text: "Assets",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Color.fromARGB(255, 74, 74, 74),
-                    ),
+                SizedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: const TextSpan(
+                          text: "Assets",
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Color.fromARGB(255, 74, 74, 74),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: const Icon(
+                          Icons.more_outlined,
+                          color: Color.fromARGB(255, 74, 74, 74),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -107,7 +122,39 @@ class Wallet extends StatelessWidget {
                 ),
                 AssetsCard(
                   cardSecondary: cardSecondary,
-                )
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                SizedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: const TextSpan(
+                          text: "Transactions",
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Color.fromARGB(255, 74, 74, 74),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: const Icon(
+                          Icons.more_outlined,
+                          color: Color.fromARGB(255, 74, 74, 74),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TransactionCard(
+                  cardSecondary: cardSecondary,
+                ),
               ],
             ),
           ),

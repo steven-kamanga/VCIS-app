@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AssetsCard extends StatelessWidget {
-  const AssetsCard({
+class TransactionCard extends StatelessWidget {
+  const TransactionCard({
     super.key,
     required this.cardSecondary,
   });
@@ -12,7 +12,7 @@ class AssetsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.16,
+      height: MediaQuery.of(context).size.height * 0.27,
       child: ListView.builder(
         itemCount: 3,
         itemBuilder: (context, index) => SizedBox(
@@ -33,7 +33,7 @@ class AssetsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: 100,
+                        width: 150,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -45,7 +45,15 @@ class AssetsCard extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(100)),
                                 color: Color.fromARGB(255, 211, 211, 211),
                               ),
-                              child: const Icon(Icons.currency_bitcoin),
+                              child: const Center(
+                                child: Text(
+                                  "avatar",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
                             ),
                             const SizedBox(
                               width: 5,
@@ -57,13 +65,13 @@ class AssetsCard extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Bitcoin",
+                                    "John Doe",
                                     style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    "BTC",
+                                    "Nov 27, 15:01",
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 74, 74, 74),
                                     ),
@@ -74,12 +82,8 @@ class AssetsCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Icon(
-                        Icons.show_chart,
-                        size: 30,
-                      ),
                       SizedBox(
-                        width: 125,
+                        width: 135,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -93,7 +97,7 @@ class AssetsCard extends StatelessWidget {
                                     text: const TextSpan(
                                       children: <TextSpan>[
                                         TextSpan(
-                                          text: 'MWk ',
+                                          text: '+ MWk ',
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
@@ -120,7 +124,6 @@ class AssetsCard extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  const Text("-12.28%")
                                 ],
                               ),
                             ),
