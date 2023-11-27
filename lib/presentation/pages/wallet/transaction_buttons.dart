@@ -1,3 +1,5 @@
+import 'package:app/presentation/pages/wallet/transfers/receive.dart';
+import 'package:app/presentation/pages/wallet/transfers/send.dart';
 import 'package:flutter/material.dart';
 
 class TransactionButtons extends StatelessWidget {
@@ -27,30 +29,38 @@ class TransactionButtons extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(30)),
                       color: buttonPrimary),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          color: buttonSecondary,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(30),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SendValue()),
+                      );
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: buttonSecondary,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_upward_outlined,
                           ),
                         ),
-                        child: const Icon(
-                          Icons.arrow_upward_outlined,
+                        const SizedBox(
+                          width: 5,
                         ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      const Text(
-                        "Transfer",
-                        style: TextStyle(fontSize: 17),
-                      ),
-                    ],
+                        const Text(
+                          "Transfer",
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -61,7 +71,12 @@ class TransactionButtons extends StatelessWidget {
           width: 10,
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ReceiveValue()),
+            );
+          },
           child: Row(
             children: [
               SizedBox(
