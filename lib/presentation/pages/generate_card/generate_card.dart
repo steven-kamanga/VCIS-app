@@ -95,6 +95,7 @@ class _GenerateCardState extends State<GenerateCard> {
     return Scaffold(
       backgroundColor: secondary,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,

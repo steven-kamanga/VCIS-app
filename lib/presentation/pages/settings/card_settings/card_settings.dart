@@ -17,6 +17,7 @@ class CardSettings extends StatelessWidget {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
       ),
