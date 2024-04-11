@@ -7,7 +7,7 @@ class CardBack extends StatefulWidget {
   CardBack({
     super.key,
     required this.cardNumber,
-    required this.cvv_number,
+    required this.cvvNumber,
     required this.expiration,
     required this.lastFour,
   });
@@ -15,7 +15,7 @@ class CardBack extends StatefulWidget {
   String cardNumber;
   String lastFour;
   String expiration;
-  String cvv_number;
+  String cvvNumber;
 
   @override
   State<CardBack> createState() => _CardBackState();
@@ -30,7 +30,7 @@ class _CardBackState extends State<CardBack> {
       cardNumber: widget.cardNumber,
       lastFour: widget.lastFour,
       expiration: widget.expiration,
-      cvv_number: widget.cvv_number,
+      cvvNumber: widget.cvvNumber,
     );
   }
 }
@@ -42,14 +42,14 @@ class CreditCard extends StatelessWidget {
     required this.cardNumber,
     required this.lastFour,
     required this.expiration,
-    required this.cvv_number,
+    required this.cvvNumber,
   }) : super(key: key);
 
   final Size size;
   final String cardNumber;
   final String lastFour;
   final String expiration;
-  final String cvv_number;
+  final String cvvNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class CreditCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                       Text(
-                        cvv_number,
+                        cvvNumber,
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ],

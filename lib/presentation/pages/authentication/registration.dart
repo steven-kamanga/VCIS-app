@@ -558,7 +558,7 @@ class _RegistrationState extends State<Registration> {
   }
 
   Future register() async {
-    String baseUrl = "http://172.20.10.4:8000/api/v1/user/register";
+    String baseUrl = "http://192.168.1.187:8000/api/v1/user/register";
     // print(baseUrl);
     var response = await http.post(Uri.parse(baseUrl),
         body: ({
@@ -599,7 +599,7 @@ class _RegistrationState extends State<Registration> {
       });
 
       // Todo: Handle Server Errors
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       pageRoute();
     } else if (response.statusCode >= 400 && response.statusCode <= 499) {
       var message = body["message"];

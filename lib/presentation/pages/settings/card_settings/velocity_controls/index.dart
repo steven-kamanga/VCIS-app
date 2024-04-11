@@ -8,7 +8,7 @@ import 'package:app/models/card.dart';
 import 'package:app/models/merchant.dart';
 import 'package:app/providers/associations.dart';
 import 'package:app/providers/card_provide.dart';
-import 'package:app/providers/merchantProvider.dart';
+import 'package:app/providers/merchant_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/presentation/components/sticky_sliver.dart';
 import 'package:dropdownfield2/dropdownfield2.dart';
@@ -670,7 +670,7 @@ class _AssociationsState extends ConsumerState<VelocityControl> {
   }
 
   Future post() async {
-    String baseUrl = "http://172.20.10.4:8000/api/v1/card/velocity-control";
+    String baseUrl = "http://192.168.1.187:8000/api/v1/card/velocity-control";
     var response = await http.post(
       Uri.parse(baseUrl),
       body: ({

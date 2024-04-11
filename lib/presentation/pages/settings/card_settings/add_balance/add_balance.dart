@@ -31,7 +31,7 @@ class _AddBalanceState extends ConsumerState<AddBalance> {
 
   void setToken() async {
     token = await getCredentials();
-    print(token);
+    // print(token);
   }
 
   CardModel? selectedCard;
@@ -137,7 +137,7 @@ class _AddBalanceState extends ConsumerState<AddBalance> {
                                           setState(() {
                                             selectedCard = newValue;
                                             card.text = newValue!.id.toString();
-                                            print(card.text);
+                                            // print(card.text);
                                           });
                                         },
                                       )
@@ -248,10 +248,7 @@ class _AddBalanceState extends ConsumerState<AddBalance> {
   }
 
   Future post() async {
-    String baseUrl = "http://172.20.10.4:8000/api/v1/card/funding";
-    print(amount.text);
-    print(card.text);
-    print(currency_code.text);
+    String baseUrl = "http://192.168.1.187:8000/api/v1/card/funding";
 
     var response = await http.post(
       Uri.parse(baseUrl),
@@ -262,11 +259,10 @@ class _AddBalanceState extends ConsumerState<AddBalance> {
       }),
       headers: {
         HttpHeaders.acceptHeader: "application/json",
-        HttpHeaders.authorizationHeader: "$token"
+        HttpHeaders.authorizationHeader: token
       },
     );
     final body = json.decode(response.body);
-    print(response.body);
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       var message = body["message"];
       ScaffoldMessenger.of(context).showSnackBar(

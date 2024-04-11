@@ -10,9 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 final cardProvider = FutureProvider<List<CardModel>>((ref) async {
   final token = await getCredentials();
   final response = await http.get(
-    Uri.parse('http://172.20.10.4:8000/api/v1/card/card-object'),
+    Uri.parse('http://192.168.1.187:8000/api/v1/card/card-object'),
     headers: {
-      HttpHeaders.authorizationHeader: '$token',
+      HttpHeaders.authorizationHeader: token,
     },
   );
   if (response.statusCode == 200) {
@@ -31,6 +31,6 @@ Future<String> getCredentials() async {
   if (token == null) {
     throw Exception('Token is null');
   }
-  print("Token: ${token.toString()}");
+  // print("Token: ${token.toString()}");
   return token;
 }

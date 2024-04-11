@@ -2,8 +2,8 @@ import 'package:app/presentation/pages/wallet/transaction_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-import 'assets_card.dart';
-import 'favourites_card.dart';
+// import 'assets_card.dart';
+// import 'favourites_card.dart';
 import 'header_text_wallet.dart';
 import 'transaction_buttons.dart';
 
@@ -55,7 +55,7 @@ class Wallet extends StatelessWidget {
               children: <Widget>[
                 RichText(
                   text: const TextSpan(
-                    text: "Current Value",
+                    text: "Current Wallet Value",
                     style: TextStyle(
                       fontSize: 17,
                       color: Color.fromARGB(255, 74, 74, 74),
@@ -76,56 +76,24 @@ class Wallet extends StatelessWidget {
                 const SizedBox(
                   height: 18,
                 ),
-                RichText(
-                  text: const TextSpan(
-                    text: "Favourites",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Color.fromARGB(255, 74, 74, 74),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                FavouritesCard(
-                  cardSecondary: cardSecondary,
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
-                SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RichText(
-                        text: const TextSpan(
-                          text: "Assets",
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Color.fromARGB(255, 74, 74, 74),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const Icon(
-                          Icons.more_outlined,
-                          color: Color.fromARGB(255, 74, 74, 74),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                AssetsCard(
-                  cardSecondary: cardSecondary,
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
+                // RichText(
+                //   text: const TextSpan(
+                //     text: "Favourites",
+                //     style: TextStyle(
+                //       fontSize: 17,
+                //       color: Color.fromARGB(255, 74, 74, 74),
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 8,
+                // ),
+                // FavouritesCard(
+                //   cardSecondary: cardSecondary,
+                // ),
+                // const SizedBox(
+                //   height: 18,
+                // ),
                 SizedBox(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

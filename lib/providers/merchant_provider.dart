@@ -1,28 +1,24 @@
 import 'dart:io';
-
-import 'package:app/models/funding.dart';
+import 'package:app/models/merchant.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-final fundingProvider =
-    FutureProvider.family<FundingModel, int>((ref, cardNumber) async {
+final merchantProvider = FutureProvider<List<MerchantModel>>((ref) async {
   final token = await getCredentials();
   final response = await http.get(
-    Uri.parse('http://172.20.10.4:8000/api/v1/card/funding'),
+    Uri.parse('http://192.168.1.187:8000/api/v1/card/merchant-scope'),
     headers: {
-      HttpHeaders.authorizationHeader: '$token',
+      HttpHeaders.authorizationHeader: token,
     },
   );
   if (response.statusCode == 200) {
-    List<FundingModel> fundings = (json.decode(response.body) as List)
-        .map((item) => FundingModel.fromJson(item))
-        .toList();
-    return fundings.firstWhere((funding) => funding.card == cardNumber);
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((item) => MerchantModel.fromJson(item)).toList();
   } else {
-    throw Exception('Failed to load funding');
+    throw Exception('Failed to load cards');
   }
 });
 
@@ -34,6 +30,6 @@ Future<String> getCredentials() async {
   if (token == null) {
     throw Exception('Token is null');
   }
-  print("Token: ${token.toString()}");
+  // print("Token: ${token.toString()}");
   return token;
 }

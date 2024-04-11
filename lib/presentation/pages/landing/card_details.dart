@@ -2,8 +2,8 @@
 
 import 'package:app/presentation/components/card_back.dart';
 import 'package:app/presentation/pages/settings/card_settings/card_settings.dart';
-import 'package:app/providers/fundingProvider.dart';
-import 'package:app/providers/velocityControls.dart';
+import 'package:app/providers/funding_provider.dart';
+import 'package:app/providers/velocity_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CardDetailsScreen extends ConsumerWidget {
   final int id;
   final String cardNumber;
-  final String cvv_number;
+  final String cvvNumber;
   final String lastFour;
   final String expiration;
 
@@ -20,7 +20,7 @@ class CardDetailsScreen extends ConsumerWidget {
     super.key,
     required this.id,
     required this.cardNumber,
-    required this.cvv_number,
+    required this.cvvNumber,
     required this.lastFour,
     required this.expiration,
   });
@@ -53,7 +53,7 @@ class CardDetailsScreen extends ConsumerWidget {
           children: <Widget>[
             CardBack(
                 cardNumber: cardNumber,
-                cvv_number: cvv_number,
+                cvvNumber: cvvNumber,
                 expiration: expiration,
                 lastFour: lastFour),
             velocityControl.when(

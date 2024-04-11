@@ -30,7 +30,7 @@ class _GenerateCardState extends State<GenerateCard> {
 
   void setToken() async {
     token = await getCredentials();
-    print(token);
+    // print(token);
   }
 
   bool isLoading = false;
@@ -38,6 +38,7 @@ class _GenerateCardState extends State<GenerateCard> {
     "MWK",
   ];
 
+  // ignore: non_constant_identifier_names
   List<String> CreditType = [
     "Debit",
   ];
@@ -425,23 +426,23 @@ class _GenerateCardState extends State<GenerateCard> {
   }
 
   Future post() async {
-    String baseUrl = "http://172.20.10.4:8000/api/v1/card/card-object";
+    String baseUrl = "http://192.168.1.187:8000/api/v1/card/card-object";
     // print(baseUrl);
     var response = await http.post(Uri.parse(baseUrl),
         body: ({
           "card_product_token": cardNumber.text,
           "last_four": lastFour.text,
           "expiration": expiration.text,
-          "cvv_number": chipCvvNumber.text,
+          "cvvNumber": chipCvvNumber.text,
           "state": city.text,
           "instrument_type": instrumentType.text,
         }),
         headers: {
           HttpHeaders.acceptHeader: "application/json",
-          HttpHeaders.authorizationHeader: "$token"
+          HttpHeaders.authorizationHeader: token
         });
     final body = json.decode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       var message = body["message"];
       ScaffoldMessenger.of(context).showSnackBar(

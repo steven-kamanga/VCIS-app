@@ -242,7 +242,7 @@ class _AssociationsState extends ConsumerState<Associations> {
   }
 
   Future post() async {
-    String baseUrl = "http://172.20.10.4:8000/api/v1/card/association";
+    String baseUrl = "http://192.168.1.187:8000/api/v1/card/association";
     var response = await http.post(
       Uri.parse(baseUrl),
       body: ({
@@ -252,11 +252,10 @@ class _AssociationsState extends ConsumerState<Associations> {
       }),
       headers: {
         HttpHeaders.acceptHeader: "application/json",
-        HttpHeaders.authorizationHeader: "$token"
+        HttpHeaders.authorizationHeader: token
       },
     );
     final body = json.decode(response.body);
-    print(response.body);
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       var message = body["message"];
       ScaffoldMessenger.of(context).showSnackBar(

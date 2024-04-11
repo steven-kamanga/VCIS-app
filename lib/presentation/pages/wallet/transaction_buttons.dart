@@ -25,7 +25,7 @@ class TransactionButtons extends StatelessWidget {
               SizedBox(
                 child: Container(
                   height: 50,
-                  width: 190,
+                  width: 160,
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(30)),
                       color: buttonPrimary),
@@ -33,7 +33,8 @@ class TransactionButtons extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SendValue()),
+                        MaterialPageRoute(
+                            builder: (context) => const SendValue()),
                       );
                     },
                     child: Row(
@@ -74,7 +75,7 @@ class TransactionButtons extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ReceiveValue()),
+              MaterialPageRoute(builder: (context) => const ReceiveValue()),
             );
           },
           child: Row(
@@ -82,7 +83,7 @@ class TransactionButtons extends StatelessWidget {
               SizedBox(
                 child: Container(
                   height: 50,
-                  width: 190,
+                  width: 160,
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(30)),
                       color: buttonPrimary),

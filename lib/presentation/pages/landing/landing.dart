@@ -104,7 +104,7 @@ class Landing extends ConsumerWidget {
                                     builder: (context) => CardDetailsScreen(
                                       id: e.id!,
                                       cardNumber: e.cardProductToken!,
-                                      cvv_number: e.cvvNumber!,
+                                      cvvNumber: e.cvvNumber!,
                                       lastFour: e.lastFour!,
                                       expiration: e.expiration!,
                                     ),
@@ -114,7 +114,7 @@ class Landing extends ConsumerWidget {
                               child: CardList(
                                 cardNumber: e.cardProductToken!,
                                 expiration: e.expiration!,
-                                cvv_number: e.cvvNumber!,
+                                cvvNumber: e.cvvNumber!,
                                 lastFour: e.lastFour!,
                               ),
                             ),

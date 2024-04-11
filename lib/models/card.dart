@@ -57,8 +57,8 @@ class CardModel {
         expirationTime: json["expiration_time"] != null
             ? DateTime.parse(json["expiration_time"])
             : null,
-        cvvNumber: json["cvv_number"],
-        chipCvvNumber: json["chip_cvv_number"],
+        cvvNumber: json["cvvNumber"],
+        chipCvvNumber: json["chip_cvvNumber"],
         pinIsSet: json["pin_is_set"],
         state: json["state"],
         fulfillmentStatus: json["fulfillment_status"],
@@ -79,8 +79,8 @@ class CardModel {
         "pan": pan,
         "expiration": expiration,
         "expiration_time": expirationTime?.toIso8601String(),
-        "cvv_number": cvvNumber,
-        "chip_cvv_number": chipCvvNumber,
+        "cvvNumber": cvvNumber,
+        "chip_cvvNumber": chipCvvNumber,
         "pin_is_set": pinIsSet,
         "state": state,
         "fulfillment_status": fulfillmentStatus,

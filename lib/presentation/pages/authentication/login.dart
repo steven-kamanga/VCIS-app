@@ -162,7 +162,7 @@ class _LoginState extends State<Login> {
 
   Future login() async {
     if (password.text.isNotEmpty && emailId.text.isNotEmpty) {
-      String baseUrl = "http://172.20.10.4:8000/api/v1/user/login";
+      String baseUrl = "http://192.168.1.187:8000/api/v1/user/login";
       // print(baseUrl);
       var response = await http.post(Uri.parse(baseUrl),
           body: ({'email': emailId.text, 'password': password.text}),
@@ -210,7 +210,7 @@ class _LoginState extends State<Login> {
         ),
       );
     }
-    await Future.delayed(Duration(seconds: 20));
+    await Future.delayed(const Duration(seconds: 20));
     setState(() => isLoading = false);
   }
 }

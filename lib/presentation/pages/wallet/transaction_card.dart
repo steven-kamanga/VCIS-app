@@ -12,9 +12,9 @@ class TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.27,
+      height: MediaQuery.of(context).size.height * 0.56,
       child: ListView.builder(
-        itemCount: 3,
+        itemCount: 10,
         itemBuilder: (context, index) => SizedBox(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 8.0),

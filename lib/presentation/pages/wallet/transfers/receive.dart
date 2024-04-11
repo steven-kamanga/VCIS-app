@@ -60,8 +60,8 @@ class ReceiveValue extends StatelessWidget {
                             width: 1,
                             color: Colors.black,
                           )),
-                      height: 300,
-                      width: 300,
+                      height: 230,
+                      width: 230,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: SfBarcodeGenerator(
@@ -115,7 +115,7 @@ class ReceiveValue extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 100,
                     ),
                   ],
